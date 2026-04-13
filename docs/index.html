@@ -22,6 +22,16 @@ button { cursor: pointer; font-family: var(--ff); }
 input { font-family: var(--ff); }
 input:focus { outline: 2px solid var(--ac); outline-offset: -2px; }
 
+/* Login */
+.login { display: flex; align-items: center; justify-content: center; min-height: 100dvh; padding: 20px; }
+.login-box { max-width: 320px; width: 100%; text-align: center; }
+.login-logo { font-family: var(--ff2); font-size: 24px; font-weight: 700; color: var(--ac); margin-bottom: 6px; }
+.login-sub { font-size: 10px; color: var(--t2); margin-bottom: 24px; letter-spacing: 0.5px; }
+.login-input { width: 100%; background: var(--c1); border: 1px solid #2A2A2A; border-radius: 6px; color: var(--t1); padding: 11px 14px; font-size: 13px; margin-bottom: 10px; text-align: center; }
+.login-btn { width: 100%; background: var(--ac); color: #000; border: none; border-radius: 6px; padding: 11px; font-size: 13px; font-weight: 700; }
+.login-btn:disabled { opacity: 0.4; }
+.login-err { color: var(--rd); font-size: 10px; margin-top: 8px; }
+
 /* Header */
 .hdr { padding: 16px 14px 8px; border-bottom: 1px solid #1A1A1A; position: sticky; top: 0; background: var(--bg); z-index: 10; }
 .hdr-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
@@ -30,42 +40,30 @@ input:focus { outline: 2px solid var(--ac); outline-offset: -2px; }
 .sub { font-size: 8px; color: var(--t2); margin-top: 2px; letter-spacing: 0.8px; text-transform: uppercase; }
 .badge { background: rgba(232,255,89,0.06); border: 1px solid rgba(232,255,89,0.13); border-radius: 3px; padding: 2px 7px; font-size: 8px; color: var(--ac); }
 .lang-btn { background: transparent; border: 1px solid #2A2A2A; border-radius: 3px; padding: 2px 7px; font-size: 8px; color: var(--t2); }
+.lock-btn { background: transparent; border: 1px solid #2A2A2A; border-radius: 3px; padding: 2px 7px; font-size: 8px; color: var(--t2); }
 
-/* Tabs */
 .tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
 .tab { background: transparent; color: var(--t2); border: 1px solid var(--border); border-radius: 3px; padding: 4px 8px; font-size: 8.5px; white-space: nowrap; transition: all 0.15s; }
 .tab.on { background: var(--ac); color: #000; border-color: var(--ac); font-weight: 700; }
 
-/* Content */
 .cnt { padding: 10px 14px; max-height: calc(100dvh - 100px); overflow-y: auto; }
-
-/* Cards */
 .card { background: var(--c1); border-radius: 6px; padding: 11px; border: 1px solid var(--border); margin-bottom: 10px; }
 .card-t { font-size: 8.5px; color: var(--t2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
-
-/* Grids */
 .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-bottom: 10px; }
 .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 10px; }
-
-/* Stats */
 .sc { background: var(--c1); border-radius: 6px; padding: 11px 8px; }
 .sc-l { font-size: 7.5px; color: var(--t2); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.3px; }
 .sc-v { font-size: 16px; font-weight: 700; line-height: 1; }
 .sc-u { font-size: 7.5px; color: var(--t2); margin-top: 1px; }
-
 .pc { display: flex; align-items: center; gap: 7px; background: var(--c1); border-radius: 6px; padding: 8px; border: 1px solid var(--border); }
 .pc-i { font-size: 15px; flex-shrink: 0; }
 .pc-l { font-size: 7.5px; color: var(--t2); margin-bottom: 1px; }
 .pc-v { font-size: 13px; font-weight: 600; }
 .pc-u { font-size: 8px; color: var(--t2); }
-
-/* Period filter */
 .pf { display: flex; gap: 3px; margin-bottom: 10px; }
 .pf-b { background: transparent; color: var(--t2); border: 1px solid #222; border-radius: 4px; padding: 4px 9px; font-size: 9px; transition: all 0.15s; }
 .pf-b.on { background: rgba(232,255,89,0.12); color: var(--ac); border-color: rgba(232,255,89,0.25); font-weight: 600; }
-
-/* Table */
 table { width: 100%; border-collapse: collapse; font-size: 10px; }
 th { text-align: right; padding: 5px 3px; color: var(--t2); font-weight: 500; font-size: 7.5px; text-transform: uppercase; border-bottom: 1px solid #2A2A2A; }
 th:first-child { text-align: left; }
@@ -73,12 +71,8 @@ td { text-align: right; padding: 5px 3px; border-bottom: 1px solid #141414; }
 td:first-child { text-align: left; color: var(--t2); font-size: 9px; }
 tr:nth-child(even) { background: rgba(22,22,22,0.4); }
 .gm { color: var(--gr); font-weight: 600; }
-
-/* BMI */
 .bmi-bar { height: 4px; border-radius: 2px; position: relative; background: linear-gradient(to right, var(--bl) 0%, var(--gr) 14%, var(--gr) 40%, var(--or) 60%, var(--rd) 100%); }
 .bmi-dot { position: absolute; top: -3px; width: 10px; height: 10px; border-radius: 50%; background: #fff; transform: translateX(-50%); }
-
-/* Weight */
 .wi { display: flex; gap: 4px; }
 .wi input { background: var(--c2); border: 1px solid #2A2A2A; border-radius: 4px; color: var(--t1); padding: 6px 5px; font-size: 10px; }
 .wi input[type="date"] { flex: 1; }
@@ -86,13 +80,14 @@ tr:nth-child(even) { background: rgba(22,22,22,0.4); }
 .btn { background: var(--ac); color: #000; border: none; border-radius: 4px; padding: 6px 10px; font-size: 10px; font-weight: 600; }
 .wr { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #141414; font-size: 10px; }
 .wm { display: flex; gap: 10px; align-items: center; }
-
-/* Utils */
 .center { text-align: center; padding: 30px; color: var(--t2); font-size: 12px; }
 .loading { display: flex; align-items: center; justify-content: center; min-height: 60dvh; color: var(--ac); font-size: 13px; }
 .error { text-align: center; padding: 40px 20px; color: var(--or); font-size: 12px; line-height: 1.6; }
 .toast { position: fixed; top: 10px; left: 50%; transform: translateX(-50%) translateY(-40px); background: var(--gr); color: #000; padding: 5px 16px; border-radius: 5px; font-size: 10px; font-weight: 600; z-index: 999; opacity: 0; transition: all 0.3s; pointer-events: none; }
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+/* Weight goal progress */
+.wg-bar { height: 6px; border-radius: 3px; background: var(--c2); margin-top: 8px; overflow: hidden; }
+.wg-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
 </style>
 </head>
 <body>
@@ -105,19 +100,73 @@ tr:nth-child(even) { background: rgba(22,22,22,0.4); }
 "use strict";
 
 // ════════════════════════════════════════════════════════════════════════════
+// Decryption (matches Python encrypt_data)
+// ════════════════════════════════════════════════════════════════════════════
+
+function b64ToBytes(b64) {
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+async function deriveKey(password, salt) {
+  const enc = new TextEncoder();
+  const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' }, keyMaterial, 256);
+  return new Uint8Array(bits);
+}
+
+async function sha256(data) {
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return new Uint8Array(hash);
+}
+
+async function decryptData(encrypted, password) {
+  const salt = b64ToBytes(encrypted.salt);
+  const iv = b64ToBytes(encrypted.iv);
+  const ct = b64ToBytes(encrypted.ct);
+  const key = await deriveKey(password, salt);
+
+  const plaintext = new Uint8Array(ct.length);
+  const blockSize = 32;
+
+  for (let i = 0; i < ct.length; i += blockSize) {
+    const counter = Math.floor(i / blockSize);
+    const counterBytes = new Uint8Array(4);
+    counterBytes[0] = (counter >> 24) & 0xff;
+    counterBytes[1] = (counter >> 16) & 0xff;
+    counterBytes[2] = (counter >> 8) & 0xff;
+    counterBytes[3] = counter & 0xff;
+
+    const input = new Uint8Array(key.length + iv.length + 4);
+    input.set(key, 0);
+    input.set(iv, key.length);
+    input.set(counterBytes, key.length + iv.length);
+
+    const blockKey = await sha256(input);
+    const chunkLen = Math.min(blockSize, ct.length - i);
+    for (let j = 0; j < chunkLen; j++) {
+      plaintext[i + j] = ct[i + j] ^ blockKey[j];
+    }
+  }
+
+  return new TextDecoder().decode(plaintext);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
 // State
 // ════════════════════════════════════════════════════════════════════════════
 
 const S = {
   lang: localStorage.getItem('wt-lang') || 'vi',
-  tab: 0,
-  period: 'all',
-  data: null,
+  tab: 0, period: 'all',
+  data: null, rawEncrypted: null,
   weights: JSON.parse(localStorage.getItem('wt-weights') || '[]'),
   height: parseFloat(localStorage.getItem('wt-height') || '0'),
   initWeight: parseFloat(localStorage.getItem('wt-iw') || '0'),
-  loading: true,
-  error: false,
+  loading: true, error: false, locked: true,
+  loginError: '',
 };
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -143,6 +192,9 @@ const I18N = {
     updated: "Cập nhật", loadError: "Không tải được data.json",
     hint: "Chạy GitHub Actions để tạo data.json",
     weightReminder: "Chưa cân hôm nay!", weighNow: "Cân ngay",
+    login: "Đăng nhập", password: "Mật khẩu", unlock: "MỞ KHOÁ",
+    wrongPw: "Sai mật khẩu!", lock: "Khoá", weightGoal: "Mục tiêu", remaining: "còn lại",
+    goalProgress: "Tiến trình cân nặng",
   },
   en: {
     appName: "WALK TRACKER", subtitle: "Personal health tracking",
@@ -162,6 +214,9 @@ const I18N = {
     updated: "Updated", loadError: "Failed to load data.json",
     hint: "Run GitHub Actions to generate data.json",
     weightReminder: "Haven't weighed today!", weighNow: "Weigh now",
+    login: "Login", password: "Password", unlock: "UNLOCK",
+    wrongPw: "Wrong password!", lock: "Lock", weightGoal: "Goal", remaining: "remaining",
+    goalProgress: "Weight progress",
   }
 };
 
@@ -198,25 +253,20 @@ function calcStats(days) {
   const tD = entries.reduce((s, e) => s + e.distance, 0);
   const tC = entries.reduce((s, e) => s + e.calories, 0);
   const tT = entries.reduce((s, e) => s + e.timeMinutes, 0);
-
   const h = S.height || (S.data?.config?.height) || 1.67;
   const cW = S.weights.length ? S.weights[S.weights.length - 1].value : (S.initWeight || null);
   const sW = S.initWeight || (S.weights.length ? S.weights[0].value : null);
   const bmi = cW && h ? cW / (h * h) : null;
   const wC = (cW && sW) ? cW - sW : null;
-
+  const wGoal = S.data?.config?.weightGoal || 60;
   return {
-    totalDist: Math.round(tD * 100) / 100,
-    totalCal: Math.round(tC),
-    totalTime: tT,
+    totalDist: Math.round(tD * 100) / 100, totalCal: Math.round(tC), totalTime: tT,
     avgSpeed: tT > 0 ? Math.round((tD / (tT / 60)) * 100) / 100 : 0,
     avgCalPerKm: tD > 0 ? Math.round((tC / tD) * 100) / 100 : 0,
     avgDist: Math.round((tD / entries.length) * 100) / 100,
-    sessions: entries.length,
-    daysActive: days.length,
+    sessions: entries.length, daysActive: days.length,
     cW, sW, bmi: bmi ? Math.round(bmi * 10) / 10 : null,
-    wC: wC ? Math.round(wC * 10) / 10 : null,
-    height: h,
+    wC: wC ? Math.round(wC * 10) / 10 : null, height: h, wGoal,
   };
 }
 
@@ -235,103 +285,47 @@ function bmiInfo(b) {
 
 function dayAgg(d) {
   return {
-    label: d.dateStr,
-    date: d.date,
+    label: d.dateStr, date: d.date,
     km: Math.round(d.entries.reduce((s, e) => s + e.distance, 0) * 100) / 100,
     cal: Math.round(d.entries.reduce((s, e) => s + e.calories, 0)),
     min: Math.round(d.entries.reduce((s, e) => s + e.timeMinutes, 0)),
-    speed: (() => {
-      const dd = d.entries.reduce((s, e) => s + e.distance, 0);
-      const tt = d.entries.reduce((s, e) => s + e.timeMinutes, 0);
-      return tt > 0 ? Math.round((dd / (tt / 60)) * 100) / 100 : 0;
-    })(),
+    speed: (() => { const dd = d.entries.reduce((s, e) => s + e.distance, 0); const tt = d.entries.reduce((s, e) => s + e.timeMinutes, 0); return tt > 0 ? Math.round((dd / (tt / 60)) * 100) / 100 : 0; })(),
     rest: false,
   };
 }
 
 function fillGaps(dayData) {
-  /** Fill in missing dates between first and last day so rest days show as 0. */
   if (dayData.length < 2) return dayData;
   const filled = [];
-  const dateSet = new Set(dayData.map(d => d.date));
+  const map = new Map(dayData.map(d => [d.date, d]));
   const start = new Date(dayData[0].date);
   const end = new Date(dayData[dayData.length - 1].date);
-  let dataIdx = 0;
-
   for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
     const iso = d.toISOString().split('T')[0];
-    const dd = d.getDate();
-    const mm = d.getMonth() + 1;
+    const dd = d.getDate(), mm = d.getMonth() + 1;
     const label = `${String(dd).padStart(2,'0')}/${String(mm).padStart(2,'0')}`;
-    if (dateSet.has(iso)) {
-      filled.push(dayData[dataIdx]);
-      dataIdx++;
-    } else {
-      filled.push({ label, date: iso, km: 0, cal: 0, min: 0, speed: 0, rest: true });
-    }
+    if (map.has(iso)) { filled.push(map.get(iso)); }
+    else { filled.push({ label, date: iso, km: 0, cal: 0, min: 0, speed: 0, rest: true }); }
   }
   return filled;
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// Charts (single manager to prevent memory leaks)
+// Charts
 // ════════════════════════════════════════════════════════════════════════════
 
 const chartInstances = {};
-
-function clearAllCharts() {
-  for (const key of Object.keys(chartInstances)) {
-    chartInstances[key].destroy();
-    delete chartInstances[key];
-  }
-}
-
-function makeChart(id, config) {
-  // Destroy previous instance of this specific chart
-  if (chartInstances[id]) {
-    chartInstances[id].destroy();
-    delete chartInstances[id];
-  }
-  const el = document.getElementById(id);
-  if (!el) return;
-  chartInstances[id] = new Chart(el, config);
-}
-
-const CHART_DEFAULTS = {
-  responsive: true,
-  maintainAspectRatio: false,
-  animation: { duration: 300 },
-  plugins: { legend: { display: false } },
-  scales: {
-    x: { grid: { color: '#1E1E1E' }, ticks: { color: '#7A7A72', font: { size: 7 } } },
-    y: { grid: { color: '#1E1E1E' }, ticks: { color: '#7A7A72', font: { size: 8 } } },
-  },
-};
-
-function deepMerge(target, source) {
-  const out = { ...target };
-  for (const key of Object.keys(source)) {
-    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-      out[key] = deepMerge(out[key] || {}, source[key]);
-    } else {
-      out[key] = source[key];
-    }
-  }
-  return out;
-}
+function clearAllCharts() { for (const k of Object.keys(chartInstances)) { chartInstances[k].destroy(); delete chartInstances[k]; } }
+function makeChart(id, cfg) { if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; } const el = document.getElementById(id); if (!el) return; chartInstances[id] = new Chart(el, cfg); }
+const CHART_DEFAULTS = { responsive: true, maintainAspectRatio: false, animation: { duration: 300 }, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1E1E1E' }, ticks: { color: '#7A7A72', font: { size: 7 } } }, y: { grid: { color: '#1E1E1E' }, ticks: { color: '#7A7A72', font: { size: 8 } } } } };
+function deepMerge(t, s) { const o = { ...t }; for (const k of Object.keys(s)) { if (s[k] && typeof s[k] === 'object' && !Array.isArray(s[k])) { o[k] = deepMerge(o[k] || {}, s[k]); } else { o[k] = s[k]; } } return o; }
 
 // ════════════════════════════════════════════════════════════════════════════
 // Toast
 // ════════════════════════════════════════════════════════════════════════════
 
 let toastTimer = null;
-function showToast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
-}
+function showToast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 2000); }
 
 // ════════════════════════════════════════════════════════════════════════════
 // Render
@@ -340,14 +334,25 @@ function showToast(msg) {
 function render() {
   const app = document.getElementById('app');
 
-  if (S.loading) {
-    app.innerHTML = `<div class="loading">${t('appName')}...</div>`;
+  // ── Login screen ──
+  if (S.locked) {
+    if (S.loading) { app.innerHTML = `<div class="loading">${t('appName')}...</div>`; return; }
+    if (S.error) { app.innerHTML = `<div class="error">${t('loadError')}<br><br><small>${t('hint')}</small></div>`; return; }
+    if (!S.rawEncrypted) { S.locked = false; render(); return; } // Not encrypted
+
+    app.innerHTML = `<div class="login"><div class="login-box">
+      <div style="font-size:32px;margin-bottom:12px">🔒</div>
+      <div class="login-logo">${t('appName')}</div>
+      <div class="login-sub">${t('subtitle')}</div>
+      <input class="login-input" type="password" id="pw-input" placeholder="${t('password')}" onkeydown="if(event.key==='Enter')tryUnlock()">
+      <button class="login-btn" onclick="tryUnlock()">${t('unlock')}</button>
+      ${S.loginError ? `<div class="login-err">${S.loginError}</div>` : ''}
+    </div></div>`;
+    document.getElementById('pw-input')?.focus();
     return;
   }
-  if (S.error || !S.data) {
-    app.innerHTML = `<div class="error">${t('loadError')}<br><br><small>${t('hint')}</small></div>`;
-    return;
-  }
+
+  if (!S.data) { app.innerHTML = `<div class="error">${t('loadError')}</div>`; return; }
 
   clearAllCharts();
 
@@ -355,18 +360,11 @@ function render() {
   const stats = calcStats(days);
   const allEntries = days.flatMap(d => d.entries.map(e => ({ ...e, dateStr: d.dateStr })));
   const totalSessions = S.data.totalSessions || 0;
-
-  // Weight reminder
   const today = new Date().toISOString().split('T')[0];
   const hasWeightToday = S.weights.some(w => w.date === today);
   const showReminder = !hasWeightToday && S.weights.length > 0;
 
-  // Period filter HTML
-  const pf = `<div class="pf">${
-    [['week','weekly'],['month','monthly'],['year','yearly'],['all','allTime']]
-    .map(([k,l]) => `<button class="pf-b ${S.period===k?'on':''}" onclick="setPeriod('${k}')">${t(l)}</button>`)
-    .join('')
-  }</div>`;
+  const pf = `<div class="pf">${[['week','weekly'],['month','monthly'],['year','yearly'],['all','allTime']].map(([k,l]) => `<button class="pf-b ${S.period===k?'on':''}" onclick="setPeriod('${k}')">${t(l)}</button>`).join('')}</div>`;
 
   let content = '';
 
@@ -376,6 +374,30 @@ function render() {
       content = `${pf}<div class="center">${t('noData')}</div>`;
     } else {
       const bi = stats.bmi ? bmiInfo(stats.bmi) : null;
+      // Weight goal progress
+      let wgHtml = '';
+      if (stats.cW && stats.sW && stats.wGoal) {
+        const totalToLose = stats.sW - stats.wGoal;
+        const lost = stats.sW - stats.cW;
+        const pct = totalToLose > 0 ? Math.min(Math.max((lost / totalToLose) * 100, 0), 100) : 0;
+        const remaining = Math.max(stats.cW - stats.wGoal, 0);
+        const color = pct >= 100 ? 'var(--gr)' : 'var(--ac)';
+        wgHtml = `<div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="card-t" style="margin-bottom:0">${t('goalProgress')}</div>
+            <span style="font-size:8px;color:var(--t2)">${t('weightGoal')}: ${stats.wGoal}kg</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:6px">
+            <span style="font-size:14px;font-weight:700;color:${color}">${Math.round(pct)}%</span>
+            <span style="font-size:10px;color:var(--t2)">${remaining.toFixed(1)}kg ${t('remaining')}</span>
+          </div>
+          <div class="wg-bar"><div class="wg-fill" style="width:${pct}%;background:${color}"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:8px;color:var(--t2);margin-top:4px">
+            <span>${stats.sW}kg</span><span>${stats.wGoal}kg</span>
+          </div>
+        </div>`;
+      }
+
       content = `${pf}
         <div class="g3">
           <div class="sc" style="border:1px solid rgba(232,255,89,0.07)"><div class="sc-l">${t('totalKm')}</div><div class="sc-v" style="color:var(--ac)">${stats.totalDist}</div><div class="sc-u">km</div></div>
@@ -394,27 +416,13 @@ function render() {
             <span style="color:var(--t2)">${t('height')}: ${stats.height}m</span>
           </div>
           <div style="display:flex;gap:8px">
-            <div style="flex:1">
-              <div style="font-size:7.5px;color:var(--t2);margin-bottom:2px">${t('weight')}</div>
-              <div style="font-size:18px;font-weight:700">${stats.cW}<span style="font-size:9px;color:var(--t2)">kg</span></div>
-              ${stats.wC !== null ? `<div style="font-size:9px;color:${stats.wC <= 0 ? 'var(--gr)' : 'var(--rd)'};margin-top:1px">${stats.wC <= 0 ? '↓' : '↑'} ${Math.abs(stats.wC)}kg ${t('fromStart')}</div>` : ''}
-            </div>
-            <div style="flex:1">
-              <div style="font-size:7.5px;color:var(--t2);margin-bottom:2px">BMI</div>
-              <div style="font-size:18px;font-weight:700;color:${bi.color}">${stats.bmi}</div>
-              <div style="font-size:9px;color:${bi.color};margin-top:1px">${bi.text}</div>
-            </div>
-            <div style="flex:1">
-              <div style="font-size:7.5px;color:var(--t2);margin-bottom:2px">${t('efficiency')}</div>
-              <div style="font-size:18px;font-weight:700;color:var(--ac)">${stats.totalDist > 0 && stats.wC !== null ? Math.abs(Math.round((stats.wC / stats.totalDist) * 1000)) : '—'}</div>
-              <div style="font-size:9px;color:var(--t2);margin-top:1px">${t('gPerKm')}</div>
-            </div>
+            <div style="flex:1"><div style="font-size:7.5px;color:var(--t2);margin-bottom:2px">${t('weight')}</div><div style="font-size:18px;font-weight:700">${stats.cW}<span style="font-size:9px;color:var(--t2)">kg</span></div>${stats.wC !== null ? `<div style="font-size:9px;color:${stats.wC <= 0 ? 'var(--gr)' : 'var(--rd)'};margin-top:1px">${stats.wC <= 0 ? '↓' : '↑'} ${Math.abs(stats.wC)}kg ${t('fromStart')}</div>` : ''}</div>
+            <div style="flex:1"><div style="font-size:7.5px;color:var(--t2);margin-bottom:2px">BMI</div><div style="font-size:18px;font-weight:700;color:${bi.color}">${stats.bmi}</div><div style="font-size:9px;color:${bi.color};margin-top:1px">${bi.text}</div></div>
+            <div style="flex:1"><div style="font-size:7.5px;color:var(--t2);margin-bottom:2px">${t('efficiency')}</div><div style="font-size:18px;font-weight:700;color:var(--ac)">${stats.totalDist > 0 && stats.wC !== null ? Math.abs(Math.round((stats.wC / stats.totalDist) * 1000)) : '—'}</div><div style="font-size:9px;color:var(--t2);margin-top:1px">${t('gPerKm')}</div></div>
           </div>
-          <div style="margin-top:10px">
-            <div style="display:flex;justify-content:space-between;font-size:7px;color:var(--t2);margin-bottom:2px"><span>15</span><span>18.5</span><span>25</span><span>30</span><span>40</span></div>
-            <div class="bmi-bar"><div class="bmi-dot" style="left:${Math.min(Math.max(((stats.bmi-15)/25)*100,0),100)}%;border:2px solid ${bi.color}"></div></div>
-          </div>
+          <div style="margin-top:10px"><div style="display:flex;justify-content:space-between;font-size:7px;color:var(--t2);margin-bottom:2px"><span>15</span><span>18.5</span><span>25</span><span>30</span><span>40</span></div><div class="bmi-bar"><div class="bmi-dot" style="left:${Math.min(Math.max(((stats.bmi-15)/25)*100,0),100)}%;border:2px solid ${bi.color}"></div></div></div>
         </div>` : ''}
+        ${wgHtml}
         <div class="card"><div class="card-t">${t('distByDay')}</div><div style="height:150px"><canvas id="c-overview"></canvas></div></div>
         <div style="text-align:center;font-size:8px;color:var(--t2);margin-top:4px">${t('updated')}: ${new Date(S.data.updatedAt).toLocaleString(S.lang === 'vi' ? 'vi-VN' : 'en-US')}</div>`;
     }
@@ -423,12 +431,8 @@ function render() {
   // ── Tab 1: Data ──
   if (S.tab === 1) {
     content = `<div style="font-size:10px;color:var(--t2);margin-bottom:6px">${t('allSessions')} (${allEntries.length})</div>${pf}
-      <div style="overflow-x:auto"><table>
-        <thead><tr><th style="text-align:left">${t('date')}</th><th>${t('time')}</th><th>${t('km')}</th><th>${t('cal')}</th><th>${t('speed')}</th></tr></thead>
-        <tbody>${[...allEntries].reverse().map(e =>
-          `<tr><td>${e.dateStr}</td><td>${e.time}</td><td${e.distance >= 5 ? ' class="gm"' : ''}>${e.distance}</td><td>${e.calories}</td><td style="color:var(--bl)">${e.speed}</td></tr>`
-        ).join('')}</tbody>
-      </table></div>`;
+      <div style="overflow-x:auto"><table><thead><tr><th style="text-align:left">${t('date')}</th><th>${t('time')}</th><th>${t('km')}</th><th>${t('cal')}</th><th>${t('speed')}</th></tr></thead>
+      <tbody>${[...allEntries].reverse().map(e => `<tr><td>${e.dateStr}</td><td>${e.time}</td><td${e.distance >= 5 ? ' class="gm"' : ''}>${e.distance}</td><td>${e.calories}</td><td style="color:var(--bl)">${e.speed}</td></tr>`).join('')}</tbody></table></div>`;
   }
 
   // ── Tab 2: Charts ──
@@ -441,8 +445,8 @@ function render() {
 
   // ── Tab 3: Weight ──
   if (S.tab === 3) {
-    content = `
-      <div class="card">
+    const wGoal = S.data?.config?.weightGoal || 60;
+    content = `<div class="card">
         <div class="card-t">${t('recordWeight')}</div>
         <div class="wi">
           <input type="date" id="w-d" value="${today}">
@@ -466,13 +470,11 @@ function render() {
   // ── Assemble ──
   app.innerHTML = `
     <div class="hdr">
-      ${showReminder ? `<div style="background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);border-radius:5px;padding:6px 9px;margin-bottom:7px;display:flex;align-items:center;gap:5px;font-size:10px">
-        <span>⚖️</span><span style="color:var(--or);flex:1">${t('weightReminder')}</span>
-        <button class="btn" style="font-size:8px;padding:2px 7px" onclick="setTab(3)">${t('weighNow')}</button>
-      </div>` : ''}
+      ${showReminder ? `<div style="background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);border-radius:5px;padding:6px 9px;margin-bottom:7px;display:flex;align-items:center;gap:5px;font-size:10px"><span>⚖️</span><span style="color:var(--or);flex:1">${t('weightReminder')}</span><button class="btn" style="font-size:8px;padding:2px 7px" onclick="setTab(3)">${t('weighNow')}</button></div>` : ''}
       <div class="hdr-top">
         <div><div class="logo">${t('appName')}</div><div class="sub">${t('subtitle')}</div></div>
         <div class="hdr-right">
+          <button class="lock-btn" onclick="doLock()" title="${t('lock')}">🔒</button>
           <button class="lang-btn" onclick="toggleLang()">${S.lang === 'vi' ? 'EN' : 'VI'}</button>
           <div class="badge">${totalSessions} ${t('sessions')}</div>
         </div>
@@ -481,62 +483,23 @@ function render() {
     </div>
     <div class="cnt">${content}</div>`;
 
-  // ── Post-render charts ──
+  // ── Charts ──
   requestAnimationFrame(() => {
     const rawDayData = days.map(dayAgg);
     const dayData = fillGaps(rawDayData);
 
     if (S.tab === 0 && stats) {
-      makeChart('c-overview', {
-        type: 'bar',
-        data: {
-          labels: dayData.map(d => d.label),
-          datasets: [{
-            data: dayData.map(d => d.km),
-            backgroundColor: dayData.map(d => d.rest ? 'rgba(122,122,114,0.15)' : '#E8FF59'),
-            borderRadius: 2,
-          }]
-        },
-        options: CHART_DEFAULTS,
-      });
+      makeChart('c-overview', { type: 'bar', data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.km), backgroundColor: dayData.map(d => d.rest ? 'rgba(122,122,114,0.15)' : '#E8FF59'), borderRadius: 2 }] }, options: CHART_DEFAULTS });
     }
-
     if (S.tab === 2) {
-      makeChart('c-dist', {
-        type: 'bar',
-        data: {
-          labels: dayData.map(d => d.label),
-          datasets: [
-            { data: dayData.map(d => d.km), backgroundColor: dayData.map(d => d.rest ? 'rgba(122,122,114,0.15)' : '#E8FF59'), borderRadius: 2, label: 'Km', yAxisID: 'y' },
-            { data: dayData.map(d => d.cal), backgroundColor: dayData.map(d => d.rest ? 'rgba(122,122,114,0.08)' : 'rgba(96,165,250,0.4)'), borderRadius: 2, label: 'Cal', yAxisID: 'y1' },
-          ]
-        },
-        options: deepMerge(CHART_DEFAULTS, {
-          plugins: { legend: { display: true, labels: { color: '#7A7A72', font: { size: 8 } } } },
-          scales: { y1: { position: 'right', grid: { display: false }, ticks: { color: '#7A7A72', font: { size: 7 } } } },
-        }),
-      });
-
-      makeChart('c-speed', {
-        type: 'line',
-        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.speed || null), borderColor: '#FB923C', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#FB923C', tension: 0.3, spanGaps: true }] },
-        options: deepMerge(CHART_DEFAULTS, { scales: { y: { min: 0 } } }),
-      });
-
-      makeChart('c-time', {
-        type: 'line',
-        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.min || null), borderColor: '#60A5FA', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#60A5FA', tension: 0.3, fill: true, backgroundColor: 'rgba(96,165,250,0.08)', spanGaps: true }] },
-        options: CHART_DEFAULTS,
-      });
+      makeChart('c-dist', { type: 'bar', data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.km), backgroundColor: dayData.map(d => d.rest ? 'rgba(122,122,114,0.15)' : '#E8FF59'), borderRadius: 2, label: 'Km', yAxisID: 'y' }, { data: dayData.map(d => d.cal), backgroundColor: dayData.map(d => d.rest ? 'rgba(122,122,114,0.08)' : 'rgba(96,165,250,0.4)'), borderRadius: 2, label: 'Cal', yAxisID: 'y1' }] }, options: deepMerge(CHART_DEFAULTS, { plugins: { legend: { display: true, labels: { color: '#7A7A72', font: { size: 8 } } } }, scales: { y1: { position: 'right', grid: { display: false }, ticks: { color: '#7A7A72', font: { size: 7 } } } } }) });
+      makeChart('c-speed', { type: 'line', data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.speed || null), borderColor: '#FB923C', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#FB923C', tension: 0.3, spanGaps: true }] }, options: deepMerge(CHART_DEFAULTS, { scales: { y: { min: 0 } } }) });
+      makeChart('c-time', { type: 'line', data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.min || null), borderColor: '#60A5FA', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#60A5FA', tension: 0.3, fill: true, backgroundColor: 'rgba(96,165,250,0.08)', spanGaps: true }] }, options: CHART_DEFAULTS });
     }
-
     if (S.tab === 3 && S.weights.length) {
       const vals = S.weights.map(w => w.value);
-      makeChart('c-weight', {
-        type: 'line',
-        data: { labels: S.weights.map(w => w.date.slice(5)), datasets: [{ data: vals, borderColor: '#4ADE80', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#4ADE80', tension: 0.3 }] },
-        options: deepMerge(CHART_DEFAULTS, { scales: { y: { min: Math.min(...vals) - 2, max: Math.max(...vals) + 2 } } }),
-      });
+      const wGoal = S.data?.config?.weightGoal || 60;
+      makeChart('c-weight', { type: 'line', data: { labels: S.weights.map(w => w.date.slice(5)), datasets: [{ data: vals, borderColor: '#4ADE80', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#4ADE80', tension: 0.3 }] }, options: deepMerge(CHART_DEFAULTS, { scales: { y: { min: Math.min(wGoal, ...vals) - 2, max: Math.max(...vals) + 2 } }, plugins: { annotation: {} } }) });
     }
   });
 }
@@ -547,29 +510,35 @@ function render() {
 
 function setTab(i) { S.tab = i; render(); }
 function setPeriod(p) { S.period = p; render(); }
-
-function toggleLang() {
-  S.lang = S.lang === 'vi' ? 'en' : 'vi';
-  localStorage.setItem('wt-lang', S.lang);
-  render();
-}
+function toggleLang() { S.lang = S.lang === 'vi' ? 'en' : 'vi'; localStorage.setItem('wt-lang', S.lang); render(); }
+function doLock() { S.locked = true; S.data = null; render(); }
 
 function addWeight() {
   const d = document.getElementById('w-d')?.value;
   const v = parseFloat(document.getElementById('w-v')?.value);
   if (!d || isNaN(v) || v <= 0 || v > 500) return;
-
-  // Update or add
   const existing = S.weights.findIndex(w => w.date === d);
-  if (existing >= 0) {
-    S.weights[existing].value = v;
-  } else {
-    S.weights.push({ date: d, value: v });
-  }
+  if (existing >= 0) { S.weights[existing].value = v; } else { S.weights.push({ date: d, value: v }); }
   S.weights.sort((a, b) => a.date.localeCompare(b.date));
   localStorage.setItem('wt-weights', JSON.stringify(S.weights));
   showToast(t('saved'));
   render();
+}
+
+async function tryUnlock() {
+  const pw = document.getElementById('pw-input')?.value;
+  if (!pw) return;
+  try {
+    const plaintext = await decryptData(S.rawEncrypted, pw);
+    S.data = JSON.parse(plaintext);
+    S.locked = false;
+    S.loginError = '';
+    if (S.data.config?.height && !S.height) { S.height = S.data.config.height; localStorage.setItem('wt-height', String(S.height)); }
+    render();
+  } catch {
+    S.loginError = t('wrongPw');
+    render();
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -580,11 +549,14 @@ async function init() {
   try {
     const resp = await fetch('data.json?v=' + Date.now());
     if (!resp.ok) throw new Error(resp.status);
-    S.data = await resp.json();
-    // Sync config
-    if (S.data.config?.height && !S.height) {
-      S.height = S.data.config.height;
-      localStorage.setItem('wt-height', String(S.height));
+    const raw = await resp.json();
+    if (raw.encrypted) {
+      S.rawEncrypted = raw;
+      S.locked = true;
+    } else {
+      S.data = raw;
+      S.locked = false;
+      if (raw.config?.height && !S.height) { S.height = raw.config.height; localStorage.setItem('wt-height', String(S.height)); }
     }
   } catch {
     S.error = true;
