@@ -470,11 +470,17 @@ def format_notion_summary(days: list[dict]) -> str:
 
 
 def make_rich_text(text: str) -> list:
-    """Split text into Notion rich_text chunks (max 2000 chars each)."""
+    """
+    Split text into Notion rich_text chunks.
+    Notion limits each rich_text element to 2000 characters.
+    Emoji/unicode may be counted as >1 char by Notion (UTF-16 code units),
+    so we use 1800 as a safe limit.
+    """
+    CHUNK_SIZE = 1800
     chunks = []
     while text:
-        chunks.append({"type": "text", "text": {"content": text[:2000]}})
-        text = text[2000:]
+        chunks.append({"type": "text", "text": {"content": text[:CHUNK_SIZE]}})
+        text = text[CHUNK_SIZE:]
     return chunks
 
 
