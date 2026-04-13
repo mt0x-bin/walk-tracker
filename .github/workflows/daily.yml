@@ -1,0 +1,53 @@
+name: Walk Tracker Daily
+
+on:
+  schedule:
+    # 22:00 GMT+7 = 15:00 UTC
+    - cron: '0 15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Walk Tracker
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
+          USER_HEIGHT: ${{ vars.USER_HEIGHT || '1.67' }}
+          TZ: Asia/Ho_Chi_Minh
+        run: python walk_tracker.py
+
+      - name: Commit data.json if changed
+        run: |
+          git config user.name "walk-tracker-bot"
+          git config user.email "bot@walk-tracker.local"
+          
+          # Only commit if data.json actually changed
+          if [ -f docs/data.json ]; then
+            git add docs/data.json
+            if ! git diff --cached --quiet; then
+              git commit -m "📊 Update $(TZ='Asia/Ho_Chi_Minh' date +'%d/%m/%Y %H:%M')"
+              git pull --rebase
+              git push
+              echo "✅ Pushed updated data.json"
+            else
+              echo "ℹ️ No changes to data.json"
+            fi
+          else
+            echo "⚠️ docs/data.json not found — script may have failed"
+            exit 1
+          fi
