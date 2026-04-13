@@ -236,6 +236,7 @@ function bmiInfo(b) {
 function dayAgg(d) {
   return {
     label: d.dateStr,
+    date: d.date,
     km: Math.round(d.entries.reduce((s, e) => s + e.distance, 0) * 100) / 100,
     cal: Math.round(d.entries.reduce((s, e) => s + e.calories, 0)),
     min: Math.round(d.entries.reduce((s, e) => s + e.timeMinutes, 0)),
@@ -244,7 +245,32 @@ function dayAgg(d) {
       const tt = d.entries.reduce((s, e) => s + e.timeMinutes, 0);
       return tt > 0 ? Math.round((dd / (tt / 60)) * 100) / 100 : 0;
     })(),
+    rest: false,
   };
+}
+
+function fillGaps(dayData) {
+  /** Fill in missing dates between first and last day so rest days show as 0. */
+  if (dayData.length < 2) return dayData;
+  const filled = [];
+  const dateSet = new Set(dayData.map(d => d.date));
+  const start = new Date(dayData[0].date);
+  const end = new Date(dayData[dayData.length - 1].date);
+  let dataIdx = 0;
+
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+    const iso = d.toISOString().split('T')[0];
+    const dd = d.getDate();
+    const mm = d.getMonth() + 1;
+    const label = `${String(dd).padStart(2,'0')}/${String(mm).padStart(2,'0')}`;
+    if (dateSet.has(iso)) {
+      filled.push(dayData[dataIdx]);
+      dataIdx++;
+    } else {
+      filled.push({ label, date: iso, km: 0, cal: 0, min: 0, speed: 0, rest: true });
+    }
+  }
+  return filled;
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -347,7 +373,7 @@ function render() {
   // ── Tab 0: Overview ──
   if (S.tab === 0) {
     if (!stats) {
-      content = `<div class="center">${t('noData')}</div>`;
+      content = `${pf}<div class="center">${t('noData')}</div>`;
     } else {
       const bi = stats.bmi ? bmiInfo(stats.bmi) : null;
       content = `${pf}
@@ -457,12 +483,20 @@ function render() {
 
   // ── Post-render charts ──
   requestAnimationFrame(() => {
-    const dayData = days.map(dayAgg);
+    const rawDayData = days.map(dayAgg);
+    const dayData = fillGaps(rawDayData);
 
     if (S.tab === 0 && stats) {
       makeChart('c-overview', {
         type: 'bar',
-        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.km), backgroundColor: '#E8FF59', borderRadius: 2 }] },
+        data: {
+          labels: dayData.map(d => d.label),
+          datasets: [{
+            data: dayData.map(d => d.km),
+            backgroundColor: dayData.map(d => d.rest ? 'rgba(122,122,114,0.15)' : '#E8FF59'),
+            borderRadius: 2,
+          }]
+        },
         options: CHART_DEFAULTS,
       });
     }
@@ -470,10 +504,13 @@ function render() {
     if (S.tab === 2) {
       makeChart('c-dist', {
         type: 'bar',
-        data: { labels: dayData.map(d => d.label), datasets: [
-          { data: dayData.map(d => d.km), backgroundColor: '#E8FF59', borderRadius: 2, label: 'Km', yAxisID: 'y' },
-          { data: dayData.map(d => d.cal), backgroundColor: 'rgba(96,165,250,0.4)', borderRadius: 2, label: 'Cal', yAxisID: 'y1' },
-        ]},
+        data: {
+          labels: dayData.map(d => d.label),
+          datasets: [
+            { data: dayData.map(d => d.km), backgroundColor: dayData.map(d => d.rest ? 'rgba(122,122,114,0.15)' : '#E8FF59'), borderRadius: 2, label: 'Km', yAxisID: 'y' },
+            { data: dayData.map(d => d.cal), backgroundColor: dayData.map(d => d.rest ? 'rgba(122,122,114,0.08)' : 'rgba(96,165,250,0.4)'), borderRadius: 2, label: 'Cal', yAxisID: 'y1' },
+          ]
+        },
         options: deepMerge(CHART_DEFAULTS, {
           plugins: { legend: { display: true, labels: { color: '#7A7A72', font: { size: 8 } } } },
           scales: { y1: { position: 'right', grid: { display: false }, ticks: { color: '#7A7A72', font: { size: 7 } } } },
@@ -482,13 +519,13 @@ function render() {
 
       makeChart('c-speed', {
         type: 'line',
-        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.speed), borderColor: '#FB923C', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#FB923C', tension: 0.3 }] },
+        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.speed || null), borderColor: '#FB923C', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#FB923C', tension: 0.3, spanGaps: true }] },
         options: deepMerge(CHART_DEFAULTS, { scales: { y: { min: 0 } } }),
       });
 
       makeChart('c-time', {
         type: 'line',
-        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.min), borderColor: '#60A5FA', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#60A5FA', tension: 0.3, fill: true, backgroundColor: 'rgba(96,165,250,0.08)' }] },
+        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.min || null), borderColor: '#60A5FA', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#60A5FA', tension: 0.3, fill: true, backgroundColor: 'rgba(96,165,250,0.08)', spanGaps: true }] },
         options: CHART_DEFAULTS,
       });
     }
