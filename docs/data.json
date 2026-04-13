@@ -1,0 +1,679 @@
+{
+  "updatedAt": "2026-04-13T16:08:24.488245+07:00",
+  "totalDays": 28,
+  "totalSessions": 50,
+  "days": [
+    {
+      "date": "2026-03-12",
+      "dateStr": "12/03",
+      "dateFull": "12/03/2026",
+      "dayOfWeek": 3,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "61:33",
+          "timeMinutes": 61.55,
+          "distance": 2.52,
+          "calories": 159,
+          "speed": 2.46,
+          "calPerKm": 63.1
+        }
+      ]
+    },
+    {
+      "date": "2026-03-13",
+      "dateStr": "13/03",
+      "dateFull": "13/03/2026",
+      "dayOfWeek": 4,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "16:43",
+          "timeMinutes": 16.72,
+          "distance": 1.05,
+          "calories": 55,
+          "speed": 3.77,
+          "calPerKm": 52.38
+        },
+        {
+          "time": "32:55",
+          "timeMinutes": 32.92,
+          "distance": 2.11,
+          "calories": 111,
+          "speed": 3.85,
+          "calPerKm": 52.61
+        },
+        {
+          "time": "65:43",
+          "timeMinutes": 65.72,
+          "distance": 3.93,
+          "calories": 211,
+          "speed": 3.59,
+          "calPerKm": 53.69
+        }
+      ]
+    },
+    {
+      "date": "2026-03-14",
+      "dateStr": "14/03",
+      "dateFull": "14/03/2026",
+      "dayOfWeek": 5,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "16:07",
+          "timeMinutes": 16.12,
+          "distance": 1.03,
+          "calories": 54,
+          "speed": 3.83,
+          "calPerKm": 52.43
+        },
+        {
+          "time": "77:17",
+          "timeMinutes": 77.28,
+          "distance": 4.0,
+          "calories": 227,
+          "speed": 3.11,
+          "calPerKm": 56.75
+        }
+      ]
+    },
+    {
+      "date": "2026-03-15",
+      "dateStr": "15/03",
+      "dateFull": "15/03/2026",
+      "dayOfWeek": 6,
+      "goal": 7.0,
+      "entries": [
+        {
+          "time": "40:41",
+          "timeMinutes": 40.68,
+          "distance": 2.13,
+          "calories": 120,
+          "speed": 3.14,
+          "calPerKm": 56.34
+        },
+        {
+          "time": "17:00",
+          "timeMinutes": 17.0,
+          "distance": 0.51,
+          "calories": 37,
+          "speed": 1.8,
+          "calPerKm": 72.55
+        },
+        {
+          "time": "23:10",
+          "timeMinutes": 23.17,
+          "distance": 1.37,
+          "calories": 75,
+          "speed": 3.55,
+          "calPerKm": 54.74
+        },
+        {
+          "time": "37:56",
+          "timeMinutes": 37.93,
+          "distance": 2.36,
+          "calories": 125,
+          "speed": 3.73,
+          "calPerKm": 52.97
+        }
+      ]
+    },
+    {
+      "date": "2026-03-16",
+      "dateStr": "16/03",
+      "dateFull": "16/03/2026",
+      "dayOfWeek": 0,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "70:34",
+          "timeMinutes": 70.57,
+          "distance": 3.31,
+          "calories": 195,
+          "speed": 2.81,
+          "calPerKm": 58.91
+        },
+        {
+          "time": "83:16",
+          "timeMinutes": 83.27,
+          "distance": 3.68,
+          "calories": 224,
+          "speed": 2.65,
+          "calPerKm": 60.87
+        }
+      ]
+    },
+    {
+      "date": "2026-03-17",
+      "dateStr": "17/03",
+      "dateFull": "17/03/2026",
+      "dayOfWeek": 1,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "73:43",
+          "timeMinutes": 73.72,
+          "distance": 2.33,
+          "calories": 167,
+          "speed": 1.9,
+          "calPerKm": 71.67
+        },
+        {
+          "time": "41:28",
+          "timeMinutes": 41.47,
+          "distance": 1.43,
+          "calories": 98,
+          "speed": 2.07,
+          "calPerKm": 68.53
+        },
+        {
+          "time": "74:53",
+          "timeMinutes": 74.88,
+          "distance": 3.24,
+          "calories": 199,
+          "speed": 2.6,
+          "calPerKm": 61.42
+        }
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "dateStr": "18/03",
+      "dateFull": "18/03/2026",
+      "dayOfWeek": 2,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "24:48",
+          "timeMinutes": 24.8,
+          "distance": 1.2,
+          "calories": 70,
+          "speed": 2.9,
+          "calPerKm": 58.33
+        }
+      ]
+    },
+    {
+      "date": "2026-03-19",
+      "dateStr": "19/03",
+      "dateFull": "19/03/2026",
+      "dayOfWeek": 3,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "80:52",
+          "timeMinutes": 80.87,
+          "distance": 7.11,
+          "calories": 371,
+          "speed": 5.28,
+          "calPerKm": 52.18
+        }
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "dateStr": "20/03",
+      "dateFull": "20/03/2026",
+      "dayOfWeek": 4,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "44:58",
+          "timeMinutes": 44.97,
+          "distance": 2.27,
+          "calories": 130,
+          "speed": 3.03,
+          "calPerKm": 57.27
+        },
+        {
+          "time": "56:55",
+          "timeMinutes": 56.92,
+          "distance": 2.83,
+          "calories": 164,
+          "speed": 2.98,
+          "calPerKm": 57.95
+        },
+        {
+          "time": "50:14",
+          "timeMinutes": 50.23,
+          "distance": 2.73,
+          "calories": 159,
+          "speed": 3.26,
+          "calPerKm": 58.24
+        }
+      ]
+    },
+    {
+      "date": "2026-03-21",
+      "dateStr": "21/03",
+      "dateFull": "21/03/2026",
+      "dayOfWeek": 5,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "8:35",
+          "timeMinutes": 8.58,
+          "distance": 0.41,
+          "calories": 24,
+          "speed": 2.87,
+          "calPerKm": 58.54
+        },
+        {
+          "time": "13:18",
+          "timeMinutes": 13.3,
+          "distance": 0.64,
+          "calories": 37,
+          "speed": 2.89,
+          "calPerKm": 57.81
+        },
+        {
+          "time": "23:30",
+          "timeMinutes": 23.5,
+          "distance": 1.08,
+          "calories": 64,
+          "speed": 2.76,
+          "calPerKm": 59.26
+        },
+        {
+          "time": "53:29",
+          "timeMinutes": 53.48,
+          "distance": 2.52,
+          "calories": 149,
+          "speed": 2.83,
+          "calPerKm": 59.13
+        }
+      ]
+    },
+    {
+      "date": "2026-03-22",
+      "dateStr": "22/03",
+      "dateFull": "22/03/2026",
+      "dayOfWeek": 6,
+      "goal": 7.0,
+      "entries": [
+        {
+          "time": "15:05",
+          "timeMinutes": 15.08,
+          "distance": 0.94,
+          "calories": 49,
+          "speed": 3.74,
+          "calPerKm": 52.13
+        },
+        {
+          "time": "54:48",
+          "timeMinutes": 54.8,
+          "distance": 3.01,
+          "calories": 167,
+          "speed": 3.3,
+          "calPerKm": 55.48
+        }
+      ]
+    },
+    {
+      "date": "2026-03-24",
+      "dateStr": "24/03",
+      "dateFull": "24/03/2026",
+      "dayOfWeek": 1,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "15:16",
+          "timeMinutes": 15.27,
+          "distance": 0.95,
+          "calories": 50,
+          "speed": 3.73,
+          "calPerKm": 52.63
+        },
+        {
+          "time": "40:46",
+          "timeMinutes": 40.77,
+          "distance": 2.54,
+          "calories": 134,
+          "speed": 3.74,
+          "calPerKm": 52.76
+        },
+        {
+          "time": "40:00",
+          "timeMinutes": 40.0,
+          "distance": 2.5,
+          "calories": 130,
+          "speed": 3.75,
+          "calPerKm": 52.0
+        }
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "dateStr": "25/03",
+      "dateFull": "25/03/2026",
+      "dayOfWeek": 2,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "20:05",
+          "timeMinutes": 20.08,
+          "distance": 1.28,
+          "calories": 67,
+          "speed": 3.82,
+          "calPerKm": 52.34
+        },
+        {
+          "time": "4:54",
+          "timeMinutes": 4.9,
+          "distance": 0.31,
+          "calories": 16,
+          "speed": 3.8,
+          "calPerKm": 51.61
+        },
+        {
+          "time": "47:44",
+          "timeMinutes": 47.73,
+          "distance": 3.51,
+          "calories": 176,
+          "speed": 4.41,
+          "calPerKm": 50.14
+        }
+      ]
+    },
+    {
+      "date": "2026-03-26",
+      "dateStr": "26/03",
+      "dateFull": "26/03/2026",
+      "dayOfWeek": 3,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "56:55",
+          "timeMinutes": 56.92,
+          "distance": 5.03,
+          "calories": 238,
+          "speed": 5.3,
+          "calPerKm": 47.32
+        },
+        {
+          "time": "34:51",
+          "timeMinutes": 34.85,
+          "distance": 2.51,
+          "calories": 126,
+          "speed": 4.32,
+          "calPerKm": 50.2
+        }
+      ]
+    },
+    {
+      "date": "2026-03-27",
+      "dateStr": "27/03",
+      "dateFull": "27/03/2026",
+      "dayOfWeek": 4,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "60:44",
+          "timeMinutes": 60.73,
+          "distance": 4.66,
+          "calories": 230,
+          "speed": 4.6,
+          "calPerKm": 49.36
+        },
+        {
+          "time": "52:12",
+          "timeMinutes": 52.2,
+          "distance": 3.01,
+          "calories": 164,
+          "speed": 3.46,
+          "calPerKm": 54.49
+        }
+      ]
+    },
+    {
+      "date": "2026-03-28",
+      "dateStr": "28/03",
+      "dateFull": "28/03/2026",
+      "dayOfWeek": 5,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "97:10",
+          "timeMinutes": 97.17,
+          "distance": 5.49,
+          "calories": 302,
+          "speed": 3.39,
+          "calPerKm": 55.01
+        }
+      ]
+    },
+    {
+      "date": "2026-03-29",
+      "dateStr": "29/03",
+      "dateFull": "29/03/2026",
+      "dayOfWeek": 6,
+      "goal": 7.0,
+      "entries": [
+        {
+          "time": "22:34",
+          "timeMinutes": 22.57,
+          "distance": 1.69,
+          "calories": 84,
+          "speed": 4.49,
+          "calPerKm": 49.7
+        },
+        {
+          "time": "61:05",
+          "timeMinutes": 61.08,
+          "distance": 4.73,
+          "calories": 233,
+          "speed": 4.65,
+          "calPerKm": 49.26
+        }
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "dateStr": "30/03",
+      "dateFull": "30/03/2026",
+      "dayOfWeek": 0,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "84:30",
+          "timeMinutes": 84.5,
+          "distance": 6.08,
+          "calories": 307,
+          "speed": 4.32,
+          "calPerKm": 50.49
+        }
+      ]
+    },
+    {
+      "date": "2026-03-31",
+      "dateStr": "31/03",
+      "dateFull": "31/03/2026",
+      "dayOfWeek": 1,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "106:10",
+          "timeMinutes": 106.17,
+          "distance": 7.25,
+          "calories": 380,
+          "speed": 4.1,
+          "calPerKm": 52.41
+        }
+      ]
+    },
+    {
+      "date": "2026-04-01",
+      "dateStr": "01/04",
+      "dateFull": "01/04/2026",
+      "dayOfWeek": 2,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "102:10",
+          "timeMinutes": 102.17,
+          "distance": 7.0,
+          "calories": 360,
+          "speed": 4.11,
+          "calPerKm": 51.43
+        }
+      ]
+    },
+    {
+      "date": "2026-04-02",
+      "dateStr": "02/04",
+      "dateFull": "02/04/2026",
+      "dayOfWeek": 3,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "146:28",
+          "timeMinutes": 146.47,
+          "distance": 7.0,
+          "calories": 412,
+          "speed": 2.87,
+          "calPerKm": 58.86
+        }
+      ]
+    },
+    {
+      "date": "2026-04-03",
+      "dateStr": "03/04",
+      "dateFull": "03/04/2026",
+      "dayOfWeek": 4,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "146:28",
+          "timeMinutes": 146.47,
+          "distance": 7.0,
+          "calories": 412,
+          "speed": 2.87,
+          "calPerKm": 58.86
+        }
+      ]
+    },
+    {
+      "date": "2026-04-04",
+      "dateStr": "04/04",
+      "dateFull": "04/04/2026",
+      "dayOfWeek": 5,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "83:07",
+          "timeMinutes": 83.12,
+          "distance": 7.01,
+          "calories": 415,
+          "speed": 5.06,
+          "calPerKm": 59.2
+        }
+      ]
+    },
+    {
+      "date": "2026-04-05",
+      "dateStr": "05/04",
+      "dateFull": "05/04/2026",
+      "dayOfWeek": 6,
+      "goal": 7.0,
+      "entries": [
+        {
+          "time": "100:09",
+          "timeMinutes": 100.15,
+          "distance": 7.03,
+          "calories": 364,
+          "speed": 4.21,
+          "calPerKm": 51.78
+        }
+      ]
+    },
+    {
+      "date": "2026-04-06",
+      "dateStr": "06/04",
+      "dateFull": "06/04/2026",
+      "dayOfWeek": 0,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "141:23",
+          "timeMinutes": 141.38,
+          "distance": 10.03,
+          "calories": 509,
+          "speed": 4.26,
+          "calPerKm": 50.75
+        }
+      ]
+    },
+    {
+      "date": "2026-04-07",
+      "dateStr": "07/04",
+      "dateFull": "07/04/2026",
+      "dayOfWeek": 1,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "78:27",
+          "timeMinutes": 78.45,
+          "distance": 5.09,
+          "calories": 266,
+          "speed": 3.89,
+          "calPerKm": 52.26
+        }
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "dateStr": "08/04",
+      "dateFull": "08/04/2026",
+      "dayOfWeek": 2,
+      "goal": 5.0,
+      "entries": [
+        {
+          "time": "109:31",
+          "timeMinutes": 109.52,
+          "distance": 7.25,
+          "calories": 376,
+          "speed": 3.97,
+          "calPerKm": 51.86
+        }
+      ]
+    },
+    {
+      "date": "2026-04-12",
+      "dateStr": "12/04",
+      "dateFull": "12/04/2026",
+      "dayOfWeek": 6,
+      "goal": 7.0,
+      "entries": [
+        {
+          "time": "109:31",
+          "timeMinutes": 109.52,
+          "distance": 7.25,
+          "calories": 376,
+          "speed": 3.97,
+          "calPerKm": 51.86
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalDistance": 175.94,
+    "totalCalories": 9568,
+    "totalTimeMinutes": 2921.72,
+    "avgSpeed": 3.61,
+    "avgDistPerSession": 3.52,
+    "avgCalPerKm": 54.38
+  },
+  "config": {
+    "height": 1.67,
+    "goals": {
+      "T2": 5.0,
+      "T3": 5.0,
+      "T4": 5.0,
+      "T5": 5.0,
+      "T6": 5.0,
+      "T7": 5.0,
+      "CN": 7.0
+    }
+  }
+}
