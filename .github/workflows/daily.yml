@@ -27,7 +27,9 @@ jobs:
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
+          ENCRYPT_PASSWORD: ${{ secrets.ENCRYPT_PASSWORD }}
           USER_HEIGHT: ${{ vars.USER_HEIGHT || '1.67' }}
+          WEIGHT_GOAL: ${{ vars.WEIGHT_GOAL || '60.0' }}
           TZ: Asia/Ho_Chi_Minh
         run: python walk_tracker.py
 
