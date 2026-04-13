@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Walk Tracker</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg: #0B0B0B; --c1: #161616; --c2: #1E1E1E; --border: #1E1E1E;
+  --t1: #F0F0EA; --t2: #7A7A72;
+  --ac: #E8FF59; --gr: #4ADE80; --rd: #F87171; --or: #FB923C; --bl: #60A5FA;
+  --ff: 'JetBrains Mono', 'Fira Code', monospace;
+  --ff2: 'Outfit', 'Space Grotesk', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--t1); font-family: var(--ff); font-size: 12px; min-height: 100dvh; overflow-x: hidden; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+button { cursor: pointer; font-family: var(--ff); }
+input { font-family: var(--ff); }
+input:focus { outline: 2px solid var(--ac); outline-offset: -2px; }
+
+/* Header */
+.hdr { padding: 16px 14px 8px; border-bottom: 1px solid #1A1A1A; position: sticky; top: 0; background: var(--bg); z-index: 10; }
+.hdr-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+.hdr-right { display: flex; gap: 4px; align-items: center; }
+.logo { font-family: var(--ff2); font-size: 17px; font-weight: 700; color: var(--ac); line-height: 1; }
+.sub { font-size: 8px; color: var(--t2); margin-top: 2px; letter-spacing: 0.8px; text-transform: uppercase; }
+.badge { background: rgba(232,255,89,0.06); border: 1px solid rgba(232,255,89,0.13); border-radius: 3px; padding: 2px 7px; font-size: 8px; color: var(--ac); }
+.lang-btn { background: transparent; border: 1px solid #2A2A2A; border-radius: 3px; padding: 2px 7px; font-size: 8px; color: var(--t2); }
+
+/* Tabs */
+.tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { background: transparent; color: var(--t2); border: 1px solid var(--border); border-radius: 3px; padding: 4px 8px; font-size: 8.5px; white-space: nowrap; transition: all 0.15s; }
+.tab.on { background: var(--ac); color: #000; border-color: var(--ac); font-weight: 700; }
+
+/* Content */
+.cnt { padding: 10px 14px; max-height: calc(100dvh - 100px); overflow-y: auto; }
+
+/* Cards */
+.card { background: var(--c1); border-radius: 6px; padding: 11px; border: 1px solid var(--border); margin-bottom: 10px; }
+.card-t { font-size: 8.5px; color: var(--t2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* Grids */
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-bottom: 10px; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 10px; }
+
+/* Stats */
+.sc { background: var(--c1); border-radius: 6px; padding: 11px 8px; }
+.sc-l { font-size: 7.5px; color: var(--t2); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.3px; }
+.sc-v { font-size: 16px; font-weight: 700; line-height: 1; }
+.sc-u { font-size: 7.5px; color: var(--t2); margin-top: 1px; }
+
+.pc { display: flex; align-items: center; gap: 7px; background: var(--c1); border-radius: 6px; padding: 8px; border: 1px solid var(--border); }
+.pc-i { font-size: 15px; flex-shrink: 0; }
+.pc-l { font-size: 7.5px; color: var(--t2); margin-bottom: 1px; }
+.pc-v { font-size: 13px; font-weight: 600; }
+.pc-u { font-size: 8px; color: var(--t2); }
+
+/* Period filter */
+.pf { display: flex; gap: 3px; margin-bottom: 10px; }
+.pf-b { background: transparent; color: var(--t2); border: 1px solid #222; border-radius: 4px; padding: 4px 9px; font-size: 9px; transition: all 0.15s; }
+.pf-b.on { background: rgba(232,255,89,0.12); color: var(--ac); border-color: rgba(232,255,89,0.25); font-weight: 600; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; font-size: 10px; }
+th { text-align: right; padding: 5px 3px; color: var(--t2); font-weight: 500; font-size: 7.5px; text-transform: uppercase; border-bottom: 1px solid #2A2A2A; }
+th:first-child { text-align: left; }
+td { text-align: right; padding: 5px 3px; border-bottom: 1px solid #141414; }
+td:first-child { text-align: left; color: var(--t2); font-size: 9px; }
+tr:nth-child(even) { background: rgba(22,22,22,0.4); }
+.gm { color: var(--gr); font-weight: 600; }
+
+/* BMI */
+.bmi-bar { height: 4px; border-radius: 2px; position: relative; background: linear-gradient(to right, var(--bl) 0%, var(--gr) 14%, var(--gr) 40%, var(--or) 60%, var(--rd) 100%); }
+.bmi-dot { position: absolute; top: -3px; width: 10px; height: 10px; border-radius: 50%; background: #fff; transform: translateX(-50%); }
+
+/* Weight */
+.wi { display: flex; gap: 4px; }
+.wi input { background: var(--c2); border: 1px solid #2A2A2A; border-radius: 4px; color: var(--t1); padding: 6px 5px; font-size: 10px; }
+.wi input[type="date"] { flex: 1; }
+.wi input[type="number"] { width: 55px; }
+.btn { background: var(--ac); color: #000; border: none; border-radius: 4px; padding: 6px 10px; font-size: 10px; font-weight: 600; }
+.wr { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #141414; font-size: 10px; }
+.wm { display: flex; gap: 10px; align-items: center; }
+
+/* Utils */
+.center { text-align: center; padding: 30px; color: var(--t2); font-size: 12px; }
+.loading { display: flex; align-items: center; justify-content: center; min-height: 60dvh; color: var(--ac); font-size: 13px; }
+.error { text-align: center; padding: 40px 20px; color: var(--or); font-size: 12px; line-height: 1.6; }
+.toast { position: fixed; top: 10px; left: 50%; transform: translateX(-50%) translateY(-40px); background: var(--gr); color: #000; padding: 5px 16px; border-radius: 5px; font-size: 10px; font-weight: 600; z-index: 999; opacity: 0; transition: all 0.3s; pointer-events: none; }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+<div id="toast" class="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+"use strict";
+
+// ════════════════════════════════════════════════════════════════════════════
+// State
+// ════════════════════════════════════════════════════════════════════════════
+
+const S = {
+  lang: localStorage.getItem('wt-lang') || 'vi',
+  tab: 0,
+  period: 'all',
+  data: null,
+  weights: JSON.parse(localStorage.getItem('wt-weights') || '[]'),
+  height: parseFloat(localStorage.getItem('wt-height') || '0'),
+  initWeight: parseFloat(localStorage.getItem('wt-iw') || '0'),
+  loading: true,
+  error: false,
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// i18n
+// ════════════════════════════════════════════════════════════════════════════
+
+const I18N = {
+  vi: {
+    appName: "ĐI BỘ TRACKER", subtitle: "Theo dõi sức khỏe cá nhân",
+    tabs: ["Tổng quan", "Dữ liệu", "Biểu đồ", "Cân nặng"],
+    sessions: "buổi", totalKm: "Tổng km", totalCal: "Tổng calo", totalTime: "Tổng thời gian",
+    avgSpeed: "Tốc độ TB", calPerKm: "Calo/km", avgPerSession: "TB mỗi buổi",
+    bodyHealth: "Sức khỏe cơ thể", height: "Chiều cao", weight: "Cân nặng",
+    efficiency: "Hiệu quả", gPerKm: "g giảm/km", fromStart: "từ đầu",
+    underweight: "Thiếu cân", normal: "Bình thường", overweight: "Thừa cân", obese: "Béo phì",
+    distByDay: "Quãng đường theo ngày", allSessions: "Tất cả buổi đi bộ",
+    date: "Ngày", time: "Thời gian (m:s)", km: "Km", cal: "Calo", speed: "Tốc độ",
+    distAndCal: "Quãng đường & Calo", speedKmh: "Tốc độ (km/h)", timeMin: "Thời gian (phút)",
+    recordWeight: "Ghi cân nặng", weightTrend: "Xu hướng cân nặng",
+    weightHistory: "Lịch sử", save: "Lưu", saved: "Đã lưu!",
+    weekly: "Tuần", monthly: "Tháng", yearly: "Năm", allTime: "Tất cả",
+    noData: "Chưa có dữ liệu", daysActive: "ngày tập", days: "ngày",
+    updated: "Cập nhật", loadError: "Không tải được data.json",
+    hint: "Chạy GitHub Actions để tạo data.json",
+    weightReminder: "Chưa cân hôm nay!", weighNow: "Cân ngay",
+  },
+  en: {
+    appName: "WALK TRACKER", subtitle: "Personal health tracking",
+    tabs: ["Overview", "Data", "Charts", "Weight"],
+    sessions: "sessions", totalKm: "Total km", totalCal: "Total cal", totalTime: "Total time",
+    avgSpeed: "Avg speed", calPerKm: "Cal/km", avgPerSession: "Avg/session",
+    bodyHealth: "Body health", height: "Height", weight: "Weight",
+    efficiency: "Efficiency", gPerKm: "g lost/km", fromStart: "from start",
+    underweight: "Underweight", normal: "Normal", overweight: "Overweight", obese: "Obese",
+    distByDay: "Distance by day", allSessions: "All sessions",
+    date: "Date", time: "Time (m:s)", km: "Km", cal: "Cal", speed: "Speed",
+    distAndCal: "Distance & Calories", speedKmh: "Speed (km/h)", timeMin: "Time (min)",
+    recordWeight: "Record weight", weightTrend: "Weight trend",
+    weightHistory: "History", save: "Save", saved: "Saved!",
+    weekly: "Week", monthly: "Month", yearly: "Year", allTime: "All",
+    noData: "No data", daysActive: "active days", days: "days",
+    updated: "Updated", loadError: "Failed to load data.json",
+    hint: "Run GitHub Actions to generate data.json",
+    weightReminder: "Haven't weighed today!", weighNow: "Weigh now",
+  }
+};
+
+function t(key) { return I18N[S.lang][key] || key; }
+
+// ════════════════════════════════════════════════════════════════════════════
+// Data helpers
+// ════════════════════════════════════════════════════════════════════════════
+
+function isoWeek(d) {
+  const tmp = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  tmp.setUTCDate(tmp.getUTCDate() + 4 - (tmp.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
+  return Math.ceil(((tmp - yearStart) / 86400000 + 1) / 7);
+}
+
+function filterDays() {
+  if (!S.data) return [];
+  const now = new Date();
+  return S.data.days.filter(d => {
+    const dt = new Date(d.date);
+    switch (S.period) {
+      case 'week': return isoWeek(dt) === isoWeek(now) && dt.getFullYear() === now.getFullYear();
+      case 'month': return dt.getMonth() === now.getMonth() && dt.getFullYear() === now.getFullYear();
+      case 'year': return dt.getFullYear() === now.getFullYear();
+      default: return true;
+    }
+  });
+}
+
+function calcStats(days) {
+  const entries = days.flatMap(d => d.entries);
+  if (!entries.length) return null;
+  const tD = entries.reduce((s, e) => s + e.distance, 0);
+  const tC = entries.reduce((s, e) => s + e.calories, 0);
+  const tT = entries.reduce((s, e) => s + e.timeMinutes, 0);
+
+  const h = S.height || (S.data?.config?.height) || 1.67;
+  const cW = S.weights.length ? S.weights[S.weights.length - 1].value : (S.initWeight || null);
+  const sW = S.initWeight || (S.weights.length ? S.weights[0].value : null);
+  const bmi = cW && h ? cW / (h * h) : null;
+  const wC = (cW && sW) ? cW - sW : null;
+
+  return {
+    totalDist: Math.round(tD * 100) / 100,
+    totalCal: Math.round(tC),
+    totalTime: tT,
+    avgSpeed: tT > 0 ? Math.round((tD / (tT / 60)) * 100) / 100 : 0,
+    avgCalPerKm: tD > 0 ? Math.round((tC / tD) * 100) / 100 : 0,
+    avgDist: Math.round((tD / entries.length) * 100) / 100,
+    sessions: entries.length,
+    daysActive: days.length,
+    cW, sW, bmi: bmi ? Math.round(bmi * 10) / 10 : null,
+    wC: wC ? Math.round(wC * 10) / 10 : null,
+    height: h,
+  };
+}
+
+function fmtMin(m) {
+  const h = Math.floor(m / 60), mm = Math.round(m % 60);
+  if (mm >= 60) return `${h + 1}h00m`;
+  return h > 0 ? `${h}h${String(mm).padStart(2, '0')}m` : `${mm}m`;
+}
+
+function bmiInfo(b) {
+  if (b < 18.5) return { text: t('underweight'), color: 'var(--or)' };
+  if (b < 25)   return { text: t('normal'),      color: 'var(--gr)' };
+  if (b < 30)   return { text: t('overweight'),   color: 'var(--or)' };
+  return { text: t('obese'), color: 'var(--rd)' };
+}
+
+function dayAgg(d) {
+  return {
+    label: d.dateStr,
+    km: Math.round(d.entries.reduce((s, e) => s + e.distance, 0) * 100) / 100,
+    cal: Math.round(d.entries.reduce((s, e) => s + e.calories, 0)),
+    min: Math.round(d.entries.reduce((s, e) => s + e.timeMinutes, 0)),
+    speed: (() => {
+      const dd = d.entries.reduce((s, e) => s + e.distance, 0);
+      const tt = d.entries.reduce((s, e) => s + e.timeMinutes, 0);
+      return tt > 0 ? Math.round((dd / (tt / 60)) * 100) / 100 : 0;
+    })(),
+  };
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Charts (single manager to prevent memory leaks)
+// ════════════════════════════════════════════════════════════════════════════
+
+const chartInstances = {};
+
+function clearAllCharts() {
+  for (const key of Object.keys(chartInstances)) {
+    chartInstances[key].destroy();
+    delete chartInstances[key];
+  }
+}
+
+function makeChart(id, config) {
+  // Destroy previous instance of this specific chart
+  if (chartInstances[id]) {
+    chartInstances[id].destroy();
+    delete chartInstances[id];
+  }
+  const el = document.getElementById(id);
+  if (!el) return;
+  chartInstances[id] = new Chart(el, config);
+}
+
+const CHART_DEFAULTS = {
+  responsive: true,
+  maintainAspectRatio: false,
+  animation: { duration: 300 },
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { grid: { color: '#1E1E1E' }, ticks: { color: '#7A7A72', font: { size: 7 } } },
+    y: { grid: { color: '#1E1E1E' }, ticks: { color: '#7A7A72', font: { size: 8 } } },
+  },
+};
+
+function deepMerge(target, source) {
+  const out = { ...target };
+  for (const key of Object.keys(source)) {
+    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+      out[key] = deepMerge(out[key] || {}, source[key]);
+    } else {
+      out[key] = source[key];
+    }
+  }
+  return out;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Toast
+// ════════════════════════════════════════════════════════════════════════════
+
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Render
+// ════════════════════════════════════════════════════════════════════════════
+
+function render() {
+  const app = document.getElementById('app');
+
+  if (S.loading) {
+    app.innerHTML = `<div class="loading">${t('appName')}...</div>`;
+    return;
+  }
+  if (S.error || !S.data) {
+    app.innerHTML = `<div class="error">${t('loadError')}<br><br><small>${t('hint')}</small></div>`;
+    return;
+  }
+
+  clearAllCharts();
+
+  const days = filterDays();
+  const stats = calcStats(days);
+  const allEntries = days.flatMap(d => d.entries.map(e => ({ ...e, dateStr: d.dateStr })));
+  const totalSessions = S.data.totalSessions || 0;
+
+  // Weight reminder
+  const today = new Date().toISOString().split('T')[0];
+  const hasWeightToday = S.weights.some(w => w.date === today);
+  const showReminder = !hasWeightToday && S.weights.length > 0;
+
+  // Period filter HTML
+  const pf = `<div class="pf">${
+    [['week','weekly'],['month','monthly'],['year','yearly'],['all','allTime']]
+    .map(([k,l]) => `<button class="pf-b ${S.period===k?'on':''}" onclick="setPeriod('${k}')">${t(l)}</button>`)
+    .join('')
+  }</div>`;
+
+  let content = '';
+
+  // ── Tab 0: Overview ──
+  if (S.tab === 0) {
+    if (!stats) {
+      content = `<div class="center">${t('noData')}</div>`;
+    } else {
+      const bi = stats.bmi ? bmiInfo(stats.bmi) : null;
+      content = `${pf}
+        <div class="g3">
+          <div class="sc" style="border:1px solid rgba(232,255,89,0.07)"><div class="sc-l">${t('totalKm')}</div><div class="sc-v" style="color:var(--ac)">${stats.totalDist}</div><div class="sc-u">km</div></div>
+          <div class="sc" style="border:1px solid rgba(74,222,128,0.07)"><div class="sc-l">${t('totalCal')}</div><div class="sc-v" style="color:var(--gr)">${stats.totalCal.toLocaleString()}</div><div class="sc-u">kcal</div></div>
+          <div class="sc" style="border:1px solid rgba(96,165,250,0.07)"><div class="sc-l">${t('totalTime')}</div><div class="sc-v" style="color:var(--bl)">${fmtMin(stats.totalTime)}</div></div>
+        </div>
+        <div class="g2">
+          <div class="pc"><span class="pc-i">🏃</span><div><div class="pc-l">${t('avgSpeed')}</div><div class="pc-v">${stats.avgSpeed} <span class="pc-u">km/h</span></div></div></div>
+          <div class="pc"><span class="pc-i">🔥</span><div><div class="pc-l">${t('calPerKm')}</div><div class="pc-v">${stats.avgCalPerKm} <span class="pc-u">kcal/km</span></div></div></div>
+          <div class="pc"><span class="pc-i">📊</span><div><div class="pc-l">${t('avgPerSession')}</div><div class="pc-v">${stats.avgDist} <span class="pc-u">km</span></div></div></div>
+          <div class="pc"><span class="pc-i">📅</span><div><div class="pc-l">${t('daysActive')}</div><div class="pc-v">${stats.daysActive} <span class="pc-u">${t('days')}</span></div></div></div>
+        </div>
+        ${bi ? `<div class="card">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:8.5px">
+            <span style="color:var(--t2);text-transform:uppercase">${t('bodyHealth')}</span>
+            <span style="color:var(--t2)">${t('height')}: ${stats.height}m</span>
+          </div>
+          <div style="display:flex;gap:8px">
+            <div style="flex:1">
+              <div style="font-size:7.5px;color:var(--t2);margin-bottom:2px">${t('weight')}</div>
+              <div style="font-size:18px;font-weight:700">${stats.cW}<span style="font-size:9px;color:var(--t2)">kg</span></div>
+              ${stats.wC !== null ? `<div style="font-size:9px;color:${stats.wC <= 0 ? 'var(--gr)' : 'var(--rd)'};margin-top:1px">${stats.wC <= 0 ? '↓' : '↑'} ${Math.abs(stats.wC)}kg ${t('fromStart')}</div>` : ''}
+            </div>
+            <div style="flex:1">
+              <div style="font-size:7.5px;color:var(--t2);margin-bottom:2px">BMI</div>
+              <div style="font-size:18px;font-weight:700;color:${bi.color}">${stats.bmi}</div>
+              <div style="font-size:9px;color:${bi.color};margin-top:1px">${bi.text}</div>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:7.5px;color:var(--t2);margin-bottom:2px">${t('efficiency')}</div>
+              <div style="font-size:18px;font-weight:700;color:var(--ac)">${stats.totalDist > 0 && stats.wC !== null ? Math.abs(Math.round((stats.wC / stats.totalDist) * 1000)) : '—'}</div>
+              <div style="font-size:9px;color:var(--t2);margin-top:1px">${t('gPerKm')}</div>
+            </div>
+          </div>
+          <div style="margin-top:10px">
+            <div style="display:flex;justify-content:space-between;font-size:7px;color:var(--t2);margin-bottom:2px"><span>15</span><span>18.5</span><span>25</span><span>30</span><span>40</span></div>
+            <div class="bmi-bar"><div class="bmi-dot" style="left:${Math.min(Math.max(((stats.bmi-15)/25)*100,0),100)}%;border:2px solid ${bi.color}"></div></div>
+          </div>
+        </div>` : ''}
+        <div class="card"><div class="card-t">${t('distByDay')}</div><div style="height:150px"><canvas id="c-overview"></canvas></div></div>
+        <div style="text-align:center;font-size:8px;color:var(--t2);margin-top:4px">${t('updated')}: ${new Date(S.data.updatedAt).toLocaleString(S.lang === 'vi' ? 'vi-VN' : 'en-US')}</div>`;
+    }
+  }
+
+  // ── Tab 1: Data ──
+  if (S.tab === 1) {
+    content = `<div style="font-size:10px;color:var(--t2);margin-bottom:6px">${t('allSessions')} (${allEntries.length})</div>${pf}
+      <div style="overflow-x:auto"><table>
+        <thead><tr><th style="text-align:left">${t('date')}</th><th>${t('time')}</th><th>${t('km')}</th><th>${t('cal')}</th><th>${t('speed')}</th></tr></thead>
+        <tbody>${[...allEntries].reverse().map(e =>
+          `<tr><td>${e.dateStr}</td><td>${e.time}</td><td${e.distance >= 5 ? ' class="gm"' : ''}>${e.distance}</td><td>${e.calories}</td><td style="color:var(--bl)">${e.speed}</td></tr>`
+        ).join('')}</tbody>
+      </table></div>`;
+  }
+
+  // ── Tab 2: Charts ──
+  if (S.tab === 2) {
+    content = `${pf}
+      <div class="card"><div class="card-t">${t('distAndCal')}</div><div style="height:160px"><canvas id="c-dist"></canvas></div></div>
+      <div class="card"><div class="card-t">${t('speedKmh')}</div><div style="height:160px"><canvas id="c-speed"></canvas></div></div>
+      <div class="card"><div class="card-t">${t('timeMin')}</div><div style="height:160px"><canvas id="c-time"></canvas></div></div>`;
+  }
+
+  // ── Tab 3: Weight ──
+  if (S.tab === 3) {
+    content = `
+      <div class="card">
+        <div class="card-t">${t('recordWeight')}</div>
+        <div class="wi">
+          <input type="date" id="w-d" value="${today}">
+          <input type="number" step="0.1" placeholder="kg" id="w-v">
+          <button class="btn" onclick="addWeight()">${t('save')}</button>
+        </div>
+      </div>
+      ${S.weights.length ? `
+        <div class="card"><div class="card-t">${t('weightTrend')}</div><div style="height:160px"><canvas id="c-weight"></canvas></div></div>
+        <div class="card"><div class="card-t">${t('weightHistory')}</div>
+          ${[...S.weights].reverse().map((w, i) => {
+            const prev = S.weights[S.weights.length - 1 - i - 1];
+            const diff = prev ? Math.round((w.value - prev.value) * 10) / 10 : null;
+            const h = S.height || S.data?.config?.height || 1.67;
+            const bmi = Math.round((w.value / (h * h)) * 10) / 10;
+            return `<div class="wr"><span style="color:var(--t2)">${w.date}</span><div class="wm"><span style="font-weight:600">${w.value}kg</span><span style="font-size:8px;color:var(--t2)">BMI ${bmi}</span>${diff !== null ? `<span style="font-size:8px;color:${diff <= 0 ? 'var(--gr)' : 'var(--rd)'}">${diff <= 0 ? '↓' : '↑'}${Math.abs(diff)}</span>` : ''}</div></div>`;
+          }).join('')}
+        </div>` : ''}`;
+  }
+
+  // ── Assemble ──
+  app.innerHTML = `
+    <div class="hdr">
+      ${showReminder ? `<div style="background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);border-radius:5px;padding:6px 9px;margin-bottom:7px;display:flex;align-items:center;gap:5px;font-size:10px">
+        <span>⚖️</span><span style="color:var(--or);flex:1">${t('weightReminder')}</span>
+        <button class="btn" style="font-size:8px;padding:2px 7px" onclick="setTab(3)">${t('weighNow')}</button>
+      </div>` : ''}
+      <div class="hdr-top">
+        <div><div class="logo">${t('appName')}</div><div class="sub">${t('subtitle')}</div></div>
+        <div class="hdr-right">
+          <button class="lang-btn" onclick="toggleLang()">${S.lang === 'vi' ? 'EN' : 'VI'}</button>
+          <div class="badge">${totalSessions} ${t('sessions')}</div>
+        </div>
+      </div>
+      <div class="tabs">${t('tabs').map((tb, i) => `<button class="tab ${S.tab === i ? 'on' : ''}" onclick="setTab(${i})">${tb}</button>`).join('')}</div>
+    </div>
+    <div class="cnt">${content}</div>`;
+
+  // ── Post-render charts ──
+  requestAnimationFrame(() => {
+    const dayData = days.map(dayAgg);
+
+    if (S.tab === 0 && stats) {
+      makeChart('c-overview', {
+        type: 'bar',
+        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.km), backgroundColor: '#E8FF59', borderRadius: 2 }] },
+        options: CHART_DEFAULTS,
+      });
+    }
+
+    if (S.tab === 2) {
+      makeChart('c-dist', {
+        type: 'bar',
+        data: { labels: dayData.map(d => d.label), datasets: [
+          { data: dayData.map(d => d.km), backgroundColor: '#E8FF59', borderRadius: 2, label: 'Km', yAxisID: 'y' },
+          { data: dayData.map(d => d.cal), backgroundColor: 'rgba(96,165,250,0.4)', borderRadius: 2, label: 'Cal', yAxisID: 'y1' },
+        ]},
+        options: deepMerge(CHART_DEFAULTS, {
+          plugins: { legend: { display: true, labels: { color: '#7A7A72', font: { size: 8 } } } },
+          scales: { y1: { position: 'right', grid: { display: false }, ticks: { color: '#7A7A72', font: { size: 7 } } } },
+        }),
+      });
+
+      makeChart('c-speed', {
+        type: 'line',
+        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.speed), borderColor: '#FB923C', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#FB923C', tension: 0.3 }] },
+        options: deepMerge(CHART_DEFAULTS, { scales: { y: { min: 0 } } }),
+      });
+
+      makeChart('c-time', {
+        type: 'line',
+        data: { labels: dayData.map(d => d.label), datasets: [{ data: dayData.map(d => d.min), borderColor: '#60A5FA', borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#60A5FA', tension: 0.3, fill: true, backgroundColor: 'rgba(96,165,250,0.08)' }] },
+        options: CHART_DEFAULTS,
+      });
+    }
+
+    if (S.tab === 3 && S.weights.length) {
+      const vals = S.weights.map(w => w.value);
+      makeChart('c-weight', {
+        type: 'line',
+        data: { labels: S.weights.map(w => w.date.slice(5)), datasets: [{ data: vals, borderColor: '#4ADE80', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#4ADE80', tension: 0.3 }] },
+        options: deepMerge(CHART_DEFAULTS, { scales: { y: { min: Math.min(...vals) - 2, max: Math.max(...vals) + 2 } } }),
+      });
+    }
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Actions
+// ════════════════════════════════════════════════════════════════════════════
+
+function setTab(i) { S.tab = i; render(); }
+function setPeriod(p) { S.period = p; render(); }
+
+function toggleLang() {
+  S.lang = S.lang === 'vi' ? 'en' : 'vi';
+  localStorage.setItem('wt-lang', S.lang);
+  render();
+}
+
+function addWeight() {
+  const d = document.getElementById('w-d')?.value;
+  const v = parseFloat(document.getElementById('w-v')?.value);
+  if (!d || isNaN(v) || v <= 0 || v > 500) return;
+
+  // Update or add
+  const existing = S.weights.findIndex(w => w.date === d);
+  if (existing >= 0) {
+    S.weights[existing].value = v;
+  } else {
+    S.weights.push({ date: d, value: v });
+  }
+  S.weights.sort((a, b) => a.date.localeCompare(b.date));
+  localStorage.setItem('wt-weights', JSON.stringify(S.weights));
+  showToast(t('saved'));
+  render();
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Init
+// ════════════════════════════════════════════════════════════════════════════
+
+async function init() {
+  try {
+    const resp = await fetch('data.json?v=' + Date.now());
+    if (!resp.ok) throw new Error(resp.status);
+    S.data = await resp.json();
+    // Sync config
+    if (S.data.config?.height && !S.height) {
+      S.height = S.data.config.height;
+      localStorage.setItem('wt-height', String(S.height));
+    }
+  } catch {
+    S.error = true;
+  }
+  S.loading = false;
+  render();
+}
+
+init();
+</script>
+</body>
+</html>
