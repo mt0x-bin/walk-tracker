@@ -250,12 +250,28 @@ def _try_dot_as_time(tok: str) -> Optional[float]:
 def parse_entry_line(line: str) -> Optional[dict]:
     """
     Parse a single data line containing 3 values: time (mm:ss), distance (km), calories.
+    Optionally a 4th value: weight in format 'XXkg' or 'XX.Xkg'.
     Values can be in any order — time is identified by ':', then smaller number = distance,
     larger number = calories.
     Fallback: if no ':' found, tries to detect 'mm.ss' as a time typo.
     Returns entry dict or None if unparseable.
     """
     tokens = line.split()
+    if len(tokens) < 3:
+        return None
+
+    # Extract weight token (e.g. '68.5kg', '70kg')
+    weight = None
+    weight_re = re.compile(r'^(\d+\.?\d*)kg$', re.IGNORECASE)
+    filtered_tokens = []
+    for tok in tokens:
+        m = weight_re.match(tok)
+        if m:
+            weight = float(m.group(1))
+        else:
+            filtered_tokens.append(tok)
+    tokens = filtered_tokens
+
     if len(tokens) < 3:
         return None
 
@@ -322,6 +338,7 @@ def parse_entry_line(line: str) -> Optional[dict]:
         "calories": calories,
         "speed": round(speed, 2),
         "cal_per_km": round(cal_per_km, 2),
+        "weight": weight,  # None if not provided
     }
 
 
@@ -562,26 +579,39 @@ def encrypt_data(plaintext: str, password: str) -> dict:
 def export_json(days: list[dict], output_path: str):
     """Export parsed data as JSON for the web dashboard."""
     json_days = []
+    weight_history = []  # Collected from entries
+
     for day in days:
         dt = day["date"]
+        day_weight = None
+        entries_json = []
+        for e in day["entries"]:
+            entries_json.append({
+                "time": e["time"],
+                "timeMinutes": e["time_minutes"],
+                "distance": e["distance"],
+                "calories": e["calories"],
+                "speed": e["speed"],
+                "calPerKm": e["cal_per_km"],
+            })
+            if e.get("weight") is not None:
+                day_weight = e["weight"]
+
         json_days.append({
             "date": dt.strftime("%Y-%m-%d"),
             "dateStr": dt.strftime("%d/%m"),
             "dateFull": dt.strftime("%d/%m/%Y"),
             "dayOfWeek": dt.weekday(),
             "goal": get_goal(dt),
-            "entries": [
-                {
-                    "time": e["time"],
-                    "timeMinutes": e["time_minutes"],
-                    "distance": e["distance"],
-                    "calories": e["calories"],
-                    "speed": e["speed"],
-                    "calPerKm": e["cal_per_km"],
-                }
-                for e in day["entries"]
-            ],
+            "entries": entries_json,
+            "weight": day_weight,
         })
+
+        if day_weight is not None:
+            weight_history.append({
+                "date": dt.strftime("%Y-%m-%d"),
+                "value": day_weight,
+            })
 
     totals = overall_totals(days)
     now = now_gmt7()
@@ -591,6 +621,7 @@ def export_json(days: list[dict], output_path: str):
         "totalDays": totals["total_days"],
         "totalSessions": totals["total_sessions"],
         "days": json_days,
+        "weights": weight_history,
         "summary": {
             "totalDistance": totals["total_dist"],
             "totalCalories": totals["total_cal"],
