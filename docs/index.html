@@ -162,9 +162,9 @@ const S = {
   lang: localStorage.getItem('wt-lang') || 'vi',
   tab: 0, period: 'all',
   data: null, rawEncrypted: null,
-  weights: JSON.parse(localStorage.getItem('wt-weights') || '[]'),
+  weights: [],  // Loaded from data.json (synced from Notion)
   height: parseFloat(localStorage.getItem('wt-height') || '0'),
-  initWeight: parseFloat(localStorage.getItem('wt-iw') || '0'),
+  initWeight: 0,
   loading: true, error: false, locked: true,
   loginError: '',
 };
@@ -446,25 +446,23 @@ function render() {
   // ── Tab 3: Weight ──
   if (S.tab === 3) {
     const wGoal = S.data?.config?.weightGoal || 60;
-    content = `<div class="card">
-        <div class="card-t">${t('recordWeight')}</div>
-        <div class="wi">
-          <input type="date" id="w-d" value="${today}">
-          <input type="number" step="0.1" placeholder="kg" id="w-v">
-          <button class="btn" onclick="addWeight()">${t('save')}</button>
-        </div>
-      </div>
+    const noWeightHint = S.lang === 'vi'
+      ? 'Ghi cân nặng trong Notion cùng dòng data đi bộ, ví dụ: 109:31 7.25 376 68.5kg'
+      : 'Log weight in Notion alongside walking data, e.g.: 109:31 7.25 376 68.5kg';
+    content = `
       ${S.weights.length ? `
-        <div class="card"><div class="card-t">${t('weightTrend')}</div><div style="height:160px"><canvas id="c-weight"></canvas></div></div>
+        <div class="card"><div class="card-t">${t('weightTrend')} · ${t('weightGoal')}: ${wGoal}kg</div><div style="height:160px"><canvas id="c-weight"></canvas></div></div>
         <div class="card"><div class="card-t">${t('weightHistory')}</div>
           ${[...S.weights].reverse().map((w, i) => {
-            const prev = S.weights[S.weights.length - 1 - i - 1];
+            const prev = [...S.weights].reverse()[i + 1];
             const diff = prev ? Math.round((w.value - prev.value) * 10) / 10 : null;
             const h = S.height || S.data?.config?.height || 1.67;
             const bmi = Math.round((w.value / (h * h)) * 10) / 10;
-            return `<div class="wr"><span style="color:var(--t2)">${w.date}</span><div class="wm"><span style="font-weight:600">${w.value}kg</span><span style="font-size:8px;color:var(--t2)">BMI ${bmi}</span>${diff !== null ? `<span style="font-size:8px;color:${diff <= 0 ? 'var(--gr)' : 'var(--rd)'}">${diff <= 0 ? '↓' : '↑'}${Math.abs(diff)}</span>` : ''}</div></div>`;
+            const toGoal = Math.round((w.value - wGoal) * 10) / 10;
+            return `<div class="wr"><span style="color:var(--t2)">${w.date}</span><div class="wm"><span style="font-weight:600">${w.value}kg</span><span style="font-size:8px;color:var(--t2)">BMI ${bmi}</span>${diff !== null ? `<span style="font-size:8px;color:${diff <= 0 ? 'var(--gr)' : 'var(--rd)'}">${diff <= 0 ? '↓' : '↑'}${Math.abs(diff)}</span>` : ''}<span style="font-size:8px;color:${toGoal <= 0 ? 'var(--gr)' : 'var(--or)'}">${toGoal > 0 ? '-' + toGoal + 'kg' : '🎯'}</span></div></div>`;
           }).join('')}
-        </div>` : ''}`;
+        </div>
+      ` : `<div class="center">${noWeightHint}</div>`}`;
   }
 
   // ── Assemble ──
@@ -513,18 +511,6 @@ function setPeriod(p) { S.period = p; render(); }
 function toggleLang() { S.lang = S.lang === 'vi' ? 'en' : 'vi'; localStorage.setItem('wt-lang', S.lang); render(); }
 function doLock() { S.locked = true; S.data = null; render(); }
 
-function addWeight() {
-  const d = document.getElementById('w-d')?.value;
-  const v = parseFloat(document.getElementById('w-v')?.value);
-  if (!d || isNaN(v) || v <= 0 || v > 500) return;
-  const existing = S.weights.findIndex(w => w.date === d);
-  if (existing >= 0) { S.weights[existing].value = v; } else { S.weights.push({ date: d, value: v }); }
-  S.weights.sort((a, b) => a.date.localeCompare(b.date));
-  localStorage.setItem('wt-weights', JSON.stringify(S.weights));
-  showToast(t('saved'));
-  render();
-}
-
 async function tryUnlock() {
   const pw = document.getElementById('pw-input')?.value;
   if (!pw) return;
@@ -533,12 +519,19 @@ async function tryUnlock() {
     S.data = JSON.parse(plaintext);
     S.locked = false;
     S.loginError = '';
-    if (S.data.config?.height && !S.height) { S.height = S.data.config.height; localStorage.setItem('wt-height', String(S.height)); }
+    syncFromData();
     render();
   } catch {
     S.loginError = t('wrongPw');
     render();
   }
+}
+
+function syncFromData() {
+  if (!S.data) return;
+  if (S.data.config?.height) { S.height = S.data.config.height; localStorage.setItem('wt-height', String(S.height)); }
+  if (S.data.weights?.length) { S.weights = S.data.weights; }
+  if (S.weights.length) { S.initWeight = S.weights[0].value; }
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -556,7 +549,7 @@ async function init() {
     } else {
       S.data = raw;
       S.locked = false;
-      if (raw.config?.height && !S.height) { S.height = raw.config.height; localStorage.setItem('wt-height', String(S.height)); }
+      syncFromData();
     }
   } catch {
     S.error = true;
